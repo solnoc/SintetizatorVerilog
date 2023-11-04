@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.9.7">
+<tagfile doxygen_version="1.9.7" doxygen_gitid="a2f34e1ed90f83713dc347b5134920f32c455d46">
   <compound kind="file">
     <name>GpuPreference.hpp</name>
     <path>include/SFML/</path>

@@ -1,0 +1,1 @@
+ "../../../lib/libsfml-window.a" "C:/Users/rober/Documents/Faculta/Licenta/Verilog/SintetizatorVerilog/lib/SFML/extlibs/libs-mingw/x64/libfreetype.a" "../../../lib/libsfml-system.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

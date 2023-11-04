@@ -1,7 +1,5 @@
 $folderPath = Get-Location
 
-
-
 $outputFolder = Join-Path -Path $folderPath -ChildPath "realease"
 $debugMode = ""
 foreach ($arg in $args) {
@@ -32,11 +30,10 @@ foreach ($cppFile in $cppFiles){
 $cppFilesToCompile = $fileArray -join " "
 
 $libraryFolder = Join-Path -Path $folderPath -ChildPath "lib\sfml-windows"
-$gppCommandCompile = "g++ -c $cppFilesToCompile -I $libraryFolder\include"
+$gppCommandCompile = "clang++ -c $cppFilesToCompile -I $libraryFolder\include"
 Invoke-Expression $gppCommandCompile
 
 Write-Output "Compiled project into object file"
-
 $objectArray = @()
 foreach ($cppFile in $cppFiles){
     $objectArray +=  [System.IO.Path]::ChangeExtension($cppFile.Name, ".o")
@@ -44,7 +41,7 @@ foreach ($cppFile in $cppFiles){
 $objectFilesToLink = $objectArray -join " "
 
 $linkerFlags = "-lsfml-graphics -lsfml-window -lsfml-system"
-$gppCommandLink = "g++ $debugOptions -o $outputFolder\sintetizator.exe $objectFilesToLink -L $libraryFolder\lib $linkerFlags"
+$gppCommandLink = "clang++ -static $debugOptions -o $outputFolder\sintetizator.exe $objectFilesToLink -L $libraryFolder\lib $linkerFlags"
 
 if(!(Test-Path -Path $outputFolder -PathType Container)){
     New-Item $outputFolder -ItemType Container
