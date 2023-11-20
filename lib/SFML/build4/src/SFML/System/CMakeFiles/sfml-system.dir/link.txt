@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\sfml-system.dir/objects.a
-C:\PROGRA~1\LLVM-M~1\bin\llvm-ar.exe qc CMakeFiles\sfml-system.dir/objects.a @CMakeFiles\sfml-system.dir\objects1.rsp
-C:\PROGRA~1\LLVM-M~1\bin\CLANG_~1.EXE -O3 -DNDEBUG -shared -o ..\..\..\bin\sfml-system-3.dll -Wl,--out-implib,..\..\..\lib\libsfml-system.a -Wl,--major-image-version,3,--minor-image-version,0 -Wl,--whole-archive CMakeFiles\sfml-system.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\sfml-system.dir\linkLibs.rsp
