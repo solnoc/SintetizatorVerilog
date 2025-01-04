@@ -1,4 +1,6 @@
-$folderPath = Get-Location
+$folderPath = "W:\Visualisation\"
+
+pushd $folderPath
 
 $outputFolder = Join-Path -Path $folderPath -ChildPath "realease"
 $debugMode = ""
@@ -66,3 +68,5 @@ foreach($pngFile in $pngFiles){
 }
 
 Write-Output "Linked object files into executable"
+
+popd
