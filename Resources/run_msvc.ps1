@@ -1,10 +1,13 @@
 $folderPath = Get-Location
+$compilerExe = "& 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\bin\Hostx64\x64\cl.exe'"
+$linkerExe = "& 'C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\bin\Hostx64\x64\link.exe'"
+
 
 $outputFolder = Join-Path -Path $folderPath -ChildPath "realease"
 $debugMode = ""
 foreach ($arg in $args) {
     if ($arg -eq "-d") {
-        $debugMode = "-g"
+        $debugMode = "/DEBUG"
         $outputFolder = Join-Path -Path $folderPath -ChildPath "debug"
     }
 }
@@ -19,7 +22,7 @@ foreach ($arg in $args) {
         break
     }
 }
-$debugOptions = "$debugMode $compilerOptimization"
+$debugOptions = "$debugMode" #$compilerOptimization"
 
 $cppFiles = Get-ChildItem -Path $folderPath -Filter "*.cpp"
 
@@ -30,18 +33,18 @@ foreach ($cppFile in $cppFiles){
 $cppFilesToCompile = $fileArray -join " "
 
 $libraryFolder = Join-Path -Path $folderPath -ChildPath "lib\sfml-windows"
-$gppCommandCompile = "clang++ $debugOptions -c $cppFilesToCompile -I $libraryFolder\include"
+$gppCommandCompile = "$compilerExe /Zi /Gd /Od /c $cppFilesToCompile /I$libraryFolder\include"
 Invoke-Expression $gppCommandCompile
 
 Write-Output "Compiled project into object file"
 $objectArray = @()
 foreach ($cppFile in $cppFiles){
-    $objectArray +=  [System.IO.Path]::ChangeExtension($cppFile.Name, ".o")
+    $objectArray +=  [System.IO.Path]::ChangeExtension($cppFile.Name, ".obj")
 }
 $objectFilesToLink = $objectArray -join " "
 
-$linkerFlags = "-lsfml-graphics -lsfml-window -lsfml-system"
-$gppCommandLink = "clang++ -static $debugOptions -o $outputFolder\sintetizator.exe $objectFilesToLink -L $libraryFolder\lib $linkerFlags"
+$linkerFlags = "sfml-graphics.lib sfml-window.lib sfml-system.lib"
+$gppCommandLink = "$linkerExe $debugOptions /OUT:$outputFolder\sintetizator.exe $objectFilesToLink /LIBPATH:$libraryFolder\lib $linkerFlags"
 
 if(!(Test-Path -Path $outputFolder -PathType Container)){
     New-Item $outputFolder -ItemType Container
